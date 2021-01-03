@@ -88,6 +88,7 @@ document.getElementById("save").addEventListener('click', () => {
         };
 
         saveQuestion(bd, codeId, question);
+        printQuestion(bd.usuarios[codeId].questions);
         console.log(bd);
     }
 });
