@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style-index.css">
+    <title>Inicio</title>
+</head>
+
+<body>
+    <div id="general">
+        <div id="message">
+            <h1>Bienvenido</h1>
+            <h3>pulsa Control + F10 ò espera 5 segundos</h3>
+        </div>
+        <form id="login" action="../php/recogerDatos.php" method="POST">
+            <fieldset>
+                <legend>Bienvenido</legend>
+                <p id="warning">!El correo ingresado no tiene el formato correspondiente¡</p>
+                <label for="nameUser">Email:</label>
+                <input type="text" id="emailUser" name="user" placeholder="Ingresa tu usuario" required>
+
+                <input type="button" id="enviar" value="Ingresar">
+            </fieldset>
+        </form>
+    </div>
+</body>
+<script type="module" src="./js/script-index.js"></script>
+
+</html>

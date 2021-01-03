@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: table;
+    width: 80%;
+    margin: 0 auto;
+    padding: 5em 0;
+}
+
+form {
+    display: table-cell;
+    width: 49%;
+    height: 90%;
+    border: 1px solid black;
+    padding: 1.5em;
+}
+
+form input[type="text"] {
+    display: inline-block;
+    width: 80%;
+}
+
+form p {
+    margin: 2em 0;
+}
+
+form p.botonera {
+    text-align: center;
+}
+
+form p.botonera input {
+    width: 100px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+div {
+    display: table-cell;
+    overflow: auto;
+    width: 49%;
+    height: 90%;
+    padding: 1.5em;
+    border: 1px solid black;
+}
+
+div table {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: 1px solid black;
+}
+
+label#warning {
+    display: none;
+    color: red;
+    font-weight: bold;
+}

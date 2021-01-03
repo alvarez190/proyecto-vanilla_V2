@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style-form.css">
+    <title>Preguntas</title>
+</head>
+
+<body>
+    <form action="#" method="POST">
+        <label id="warning"> Debes llenar todos los campos </label>
+        <p>
+            <label for="nameQuestion">Pregunta: </label>
+            <input type="text" name="question" id="nameQuestion" required>
+        </p>
+        <p>
+            <label for="true">Verdadero</label>
+            <input type="radio" name="answer" id="true">
+            <label for="false">Falso</label>
+            <input type="radio" name="answer" id="false">
+        </p>
+        <p>
+            Puntacion:
+            <input type="number" name="" id="points" min="0" max="9" required>
+        </p>
+        <p class="botonera">
+            <input type="button" value="Atras" id="back">
+            <input type="button" value="Guardar" id="save">
+        </p>
+    </form>
+    <div id="register">
+        <table>
+            <tr>
+                <th>Pregunta</th>
+                <th>Respuesta</th>
+                <th>Puntacion</th>
+                <th>Estado</th>
+            </tr>
+        </table>
+    </div>
+</body>
+<script src="../js/script-saveQuestions.js"></script>
+
+</html>
