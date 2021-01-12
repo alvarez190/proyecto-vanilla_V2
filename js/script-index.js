@@ -3,6 +3,19 @@ import { setCookie, getCookie, deleteCookie } from "./methods-cookie.js";
 var node_message = document.getElementById("message");
 var node_form_login = document.getElementById("login");
 var node_mail = document.getElementById("emailUser");
+var cookie;
+var object_user;
+
+window.addEventListener('load', () => {
+    cookie = getCookie("datos");
+    if (cookie) {
+        object_user = JSON.parse(cookie);
+    } else {
+        createBaseWithDataTest();
+        cookie = getCookie("datos");
+        object_user = JSON.parse(cookie);
+    }
+});
 
 /**
  * Funcion donde redirijo la pagina si cumple la combinacion de teclas
@@ -26,7 +39,7 @@ function validation() {
     let expression = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
     if (expression.test(email)) {
-        checkAndSaveData().then(result => console.log(result)).catch(error => console.log(error));
+        checkAndSaveData();
     } else {
         document.getElementById("warning").style.display = 'block';
         node_mail.select();
@@ -77,8 +90,7 @@ function createBaseWithDataTest() {
             }]
         }]
     };
-
-    JSON.stringify(datos); // Pasa el objeto en un objeto string JSON
+    // Pasa el objeto en un objeto string JSON
     setCookie("datos", JSON.stringify(datos));
 }
 
@@ -94,40 +106,29 @@ function saveData(bd) {
 
 function checkAndSaveData() {
     // Compruebo si la cookie existe y si no crea una con unos datos prederterminados
-    let promesa = new Promise((resolve, reject) => {
-        let cookie = getCookie("datos");
-        if (cookie) {
-            let db = JSON.parse(cookie);
-            let confirmationRegister;
-            let mail = node_mail.value;
-            let codeIdUser;
 
-            // Aqui compruebo si los datos ingresados no han sido antes ingresados y guardados
-            for (const key in db.usuarios) {
-                if (db.usuarios[key].correo == mail) {
-                    confirmationRegister = true;
-                    codeIdUser = key;
-                    break;
-                } else {
-                    confirmationRegister = false;
-                }
-            }
+    let confirmationRegister;
+    let mail = node_mail.value;
+    let codeIdUser;
 
-            // Dependiendo de la respuesta llama a una funcion
-            if (confirmationRegister) {
-                document.location.href = './views/view.welcome.html?user=' + mail;
-            } else {
-                saveData(bd);
-                document.location.href = './views/view.welcome.html?user=' + mail;
-            }
-        } else if (!cookie) {
-            createBaseWithDataTest()
+    // Aqui compruebo si los datos ingresados no han sido antes ingresados y guardados
+    for (const key in object_user.usuarios) {
+        if (object_user.usuarios[key].correo == mail) {
+            confirmationRegister = true;
+            codeIdUser = key;
+            break;
         } else {
-            reject("No se encuentra base de datos")
+            confirmationRegister = false;
         }
-    });
+    }
 
-    return promesa
+    // Dependiendo de la respuesta llama a una funcion
+    if (confirmationRegister) {
+        document.location.href = './views/view.welcome.html?user=' + mail;
+    } else {
+        saveData(object_user);
+        document.location.href = './views/view.welcome.html?user=' + mail;
+    }
 }
 
 window.addEventListener("keydown", changeWindows, false);
