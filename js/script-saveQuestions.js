@@ -42,7 +42,7 @@ for (const key in bd.usuarios) {
     }
 }
 
-function getDataQuestion() {}
+/*************************************/
 
 function saveQuestion(bd, codeId, dataQuestion) {
     bd.usuarios[codeId].questions.push(dataQuestion);
@@ -51,20 +51,36 @@ function saveQuestion(bd, codeId, dataQuestion) {
 
 var table = document.getElementById('register');
 
-function printQuestion(arrayQuest) {
+function printQuestions(arrayQuest) {
     try {
         for (let i = 0; i < arrayQuest.length; i++) {
             let fila = document.createElement("tr");
             for (const key in arrayQuest) {
-                fila.appendChild(document.createElement("td").innerHTML = arrayQuest[key]);
+                let pregunta = arrayQuest[key];
+                for (const text in pregunta) {
+                    console.log(pregunta[text]);
+                    var celda = document.createElement("td");
+                    var textoCelda = document.createTextNode(pregunta[text]);
+                    celda.appendChild(textoCelda);
+                    fila.appendChild(celda);
+                }
             }
+            document.getElementById("questions").appendChild(fila);
         }
     } catch (error) {
         console.log("No se ha encontrado preguntas registradas con el usuario ingresado");
     }
 };
 
-printQuestion(arrQuestion);
+/** Simulacion de carga de preguntas */
+
+setTimeout(() => {
+    document.getElementById("cargando").style.display = "none";
+    document.getElementById("questions").style.display = "block";
+
+    printQuestions(arrQuestion);
+
+}, 3000);
 
 document.getElementById("back").addEventListener('click', () => {
     document.location.href = "../index.html";
@@ -80,15 +96,15 @@ document.getElementById("save").addEventListener('click', () => {
     if (name == "" && points == "") {
         document.getElementById("warning").style.display = "block";
     } else {
+
         question = {
             name: name,
             answer: answer,
             points: points,
-            status: status
+            status: "ok"
         };
 
         saveQuestion(bd, codeId, question);
-        printQuestion(bd.usuarios[codeId].questions);
         console.log(bd);
     }
 });
