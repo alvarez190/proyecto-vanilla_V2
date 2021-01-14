@@ -44,26 +44,34 @@ for (const key in bd.usuarios) {
 
 /*************************************/
 
-function saveQuestion(bd, codeId, dataQuestion) {
-    bd.usuarios[codeId].questions.push(dataQuestion);
-    setCookie("datos", JSON.stringify(bd));
+function saveQuestion(bd, codeId, dataQuest) {
+    try {
+        document.getElementById("cargando").style.display = "block";
+        document.getElementById("cargando").innerHTML = "Guardando....";
+        setTimeout(() => {
+            document.getElementById("cargando").style.display = "none";
+
+            bd.usuarios[codeId].questions.push(dataQuest);
+            setCookie("datos", JSON.stringify(bd));
+            showQuestion(dataQuest);
+        })
+    } catch (error) {
+        status = "error"
+        showQuestion(dataQuest);
+    }
 }
 
 var table = document.getElementById('register');
 
-function printQuestions(arrayQuest) {
+function printQuestionsSaved(arrayQuest) {
     try {
-        for (let i = 0; i < arrayQuest.length; i++) {
+        for (const quest of arrayQuest) {
             let fila = document.createElement("tr");
-            for (const key in arrayQuest) {
-                let pregunta = arrayQuest[key];
-                for (const text in pregunta) {
-                    console.log(pregunta[text]);
-                    var celda = document.createElement("td");
-                    var textoCelda = document.createTextNode(pregunta[text]);
-                    celda.appendChild(textoCelda);
-                    fila.appendChild(celda);
-                }
+            for (const key in quest) {
+                var celda = document.createElement("td");
+                var textoCelda = document.createTextNode(quest[key]);
+                celda.appendChild(textoCelda);
+                fila.appendChild(celda);
             }
             document.getElementById("questions").appendChild(fila);
         }
@@ -72,13 +80,26 @@ function printQuestions(arrayQuest) {
     }
 };
 
+function showQuestion(question) {
+    let fila = document.createElement("tr");
+    for (const key in question) {
+        if (Object.hasOwnProperty.call(question, key)) {
+            var celda = document.createElement("td");
+            var textoCelda = document.createTextNode(question[key]);
+            celda.appendChild(textoCelda);
+            fila.appendChild(celda);
+        }
+    }
+    document.getElementById("questions").appendChild(fila);
+}
+
 /** Simulacion de carga de preguntas */
 
 setTimeout(() => {
     document.getElementById("cargando").style.display = "none";
     document.getElementById("questions").style.display = "block";
 
-    printQuestions(arrQuestion);
+    printQuestionsSaved(arrQuestion);
 
 }, 3000);
 
@@ -101,10 +122,9 @@ document.getElementById("save").addEventListener('click', () => {
             name: name,
             answer: answer,
             points: points,
-            status: "ok"
+            status: status
         };
 
         saveQuestion(bd, codeId, question);
-        console.log(bd);
     }
 });

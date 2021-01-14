@@ -40,7 +40,7 @@ form p.botonera input {
 
 div {
     display: table-cell;
-    overflow: auto;
+    overflow: scroll;
     width: 49%;
     height: 90%;
     padding: 1.5em;
